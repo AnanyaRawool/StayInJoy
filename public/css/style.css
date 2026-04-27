@@ -1,0 +1,162 @@
+/*for navbar*/
+body {
+font-family: "Plus Jakarta Sans", sans-serif !important;
+/*for footer should always take remaining space from the window */
+display: flex;
+flex-direction: column;
+min-height: 100vh; /*vh -viewport height*/
+}
+
+.container{
+    /*container will take complete height */
+     flex: 1;
+}
+
+.navbar{
+    height: 5rem;
+    background-color: white;/* as we scroll down list is get overlapped on navbar due to navbar coloue is tranparent so set it as white */
+}
+.fa-compass{
+    color: #fe424d;
+    font-size: 2rem;
+}
+
+.nav-link{
+    color: #222222 !important;/* bootstrap has its own styling so if we want to use our own styling so !important should be writr to override styling of bootstrap. */  
+}
+
+/* Footer */
+.f-info-links a {
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
+
+.f-info-links, .f-info-socials, .f-info-brand {
+  width: 100%;
+  display: flex;  
+  align-items: center;
+  justify-content: center;
+}
+
+.f-info-socials i {
+    font-size: 1.2rem;
+    margin-right: 1rem;     
+}
+
+.f-info{
+   text-align: center;
+   height: 6rem;
+   background-color: #ebebeb;
+   display: flex; 
+   justify-content: center;
+   flex-wrap: wrap;
+   align-items:space-evenly;
+}
+
+.listing-card{
+    border: none !important;
+    margin:1rem;
+}
+
+.card-img-top{
+   border-radius: 1rem !important; 
+   width: 100% !important;
+   object-fit: cover !important; 
+}
+
+.card-body{
+    padding: 0 !important;
+}
+
+.card-text{
+    font-weight: 400;
+    margin-bottom: 4px;
+}
+
+body{
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+}
+
+.listing-link{
+    text-decoration: none;
+}
+.card-img-overlay{
+    background: none ;
+    opacity: 1;
+    padding: 0;
+}
+
+.listing-card:hover .card-img-overlay{
+    background-color: rgba(255,255,255,0.2);
+}
+
+
+.add-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/*edit page*/
+.edit-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/*show page*/
+.show-img{
+    height: 30vh;
+}
+
+.btns{
+display: flex;
+}
+
+.show-card{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* map */
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.heart-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: white;
+    z-index: 10;
+    text-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+}
+
+.heart-btn .fa-heart {
+    transition: color 0.2s ease;
+}
+
+.heart-btn.liked .fa-heart {
+    color: red;
+    font-weight: 900;  
+}
+
+.filter-link {
+    text-decoration: none;
+    color: #222222;
+}
+
+.active-filter {
+    opacity: 1 !important;
+    border-bottom: 2px solid black;
+    padding-bottom: 4px;
+}

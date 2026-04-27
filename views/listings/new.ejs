@@ -1,0 +1,108 @@
+<% layout("/layouts/boilerplate") %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLust</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-8 offset-2">
+            <br/><br/>
+    <h3>Create a New Listing</h3>
+</br>
+    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data"> 
+        <div class="mb-3">
+            <label for ="title" class="form-label">Title</label></br>
+            <input 
+              name="listing[title]"
+              placeholder="Add a catchy title" 
+              type="text" 
+              class="form-control"
+              required
+            />
+        <div class="valid-feedback">Title looks good</div>
+        </div>
+    
+        <div class="mb-3">
+            <label for ="description" class="form-label">Description</label></br>
+            <textarea
+              name="listing[description]" 
+
+              type="text"
+              class="form-control" 
+            ></textarea>
+        </div>
+   
+        <div class="mb-3">
+            <label for ="image" class="form-label">Upload Image</label></br>
+            <input name="listing[image]" type="file" class="form-control" >
+             required
+        </div>
+ 
+       <div class="row">
+          <div class="mb-3 col-md-4">  <!--when only medium screen is on then only proce and country should on same line -->
+            <label for ="price" class="form-label">Price</label></br>
+            <input name="listing[price]" placeholder="enter price" type="number" class="form-control">
+          </div>
+        
+          <div class="mb-3 col-md-8">
+            <label for ="country" class="form-label">Country</label></br>
+            <input name="listing[country]" placeholder="enter country" type="text" class="form-control">
+          </div>
+       </div>
+
+       
+        <div class="mb-3">
+            <label for ="location" class="form-label">Location</label></br>
+            <input name="listing[location]" placeholder="enter location" type="text" class="form-control" >
+        </div>
+   
+        <!-- taxRate field added here -->
+        <div class="mb-3">
+            <label for="taxRate" class="form-label">GST Rate (%)</label></br>
+            <input 
+               name="listing[taxRate]"
+               id="taxRate" 
+               placeholder="enter GST % (e.g. 18)" 
+               type="number"
+               min="0"
+               max="100"
+               class="form-control">
+            <div class="form-text">Leave empty for default 18% GST</div>
+        </div>
+
+    <!-- filter of capm , farm and all  -->
+       <!-- category dropdown added here -->
+       <div class="mb-3">
+        <label for="category" class="form-label">Category</label></br>
+        <select name="listing[category]" id="category" class="form-control">
+            <option value="">-- Select Category --</option>
+            <option value="trending">Trending</option>
+            <option value="rooms">Rooms</option>
+            <option value="iconic cities">Iconic Cities</option>
+            <option value="mountains">Mountains</option>
+            <option value="castles">Castles</option>
+            <option value="amazing pools">Amazing Pools</option>
+            <option value="camping">Camping</option>
+            <option value="farms">Farms</option>
+            <option value="arctic">Arctic</option>
+            <option value="domes">Domes</option>
+            <option value="boats">Boats</option>
+        </select>
+    </div>
+
+
+
+
+    </br>
+        <button class="btn btn-dark add-btn">Add</button>
+    <br/><br/>
+
+    </form>
+</div>
+</div>
+</body>
+</html>

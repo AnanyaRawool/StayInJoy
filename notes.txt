@@ -1,0 +1,259 @@
+npm init -y for package.json
+npm i express for node_modules and package-lock.json
+npm i ejs
+npm i mongoose
+npm install joi
+npm i connect-flash
+'touch app.js' for creating app.js 
+'nodemon app.js' for starting the server
+npm i method-override for we use ?_method=PUT this as method ovverride to use post as put request, to run file nodemon app.js
+npm i ejs-mate help to create template at high level
+
+mongoose commands:- 
+on terminal write 'mongosh' to 'use mongoose'
+on terminal write 'show dbs'
+go to mongoose website and copy link of mongoose connect-url and paste on the mongooseurl in the app.
+use wanderlast - wanderlast database name 
+show collections - it will show listings 
+db.listings.find()
+db.reviews.find()
+  
+'node index.js' on terminal 
+to see output  'localhost:8080/listings' on url bar
+review/rating/ commnet page making functionable after submitting then 
+when we want to add new things like new listing we use POST request (POST/listings)now we want to add this feedback so use POST request (POST/listings/:id/reviews)
+
+to give validation of sothing need to fill compulsory then use 'requried' . 
+
+for deleting review
+by clicking delete button request for deleting review should go to server , when we want to delete listing we use /listing/:id but our review is part of listing so request go to /listing/:id/review/:reviewId. Review should delete itself but also it should delete from review arrayof listing as array of  listing consist of review's object id and if we delete review of any object id the nwe also need to delete object id 
+for this we use($pull Operator of MongoDB) Mongo $pull Operator app.js , it will find the specific review from array of review in the listing and delete that specific review 
+we can check as we click delete button reviewId get deleted or not , for this in mongosh ' db.listings.findOne({title:"Historic Villa in Tuscany"}) ,we will not get deleted reviewId 
+
+express route 
+It is not compulsory to use express route
+Express route use for make code distributed in chunks so that it become easy to understand.
+const router = express.Router() ....create new router object  
+as  server.js file consist of both user and post routes then by use of express route we use 2 different file user.js and post.js both in classroom folder then in server.js file only write 2 line
+app.use("/users", users);
+app.use("/posts", posts);
+to run such server write nodemon server.js
+
+
+type of request:
+GET : Retrieving data
+POST : Submitting data to be processed
+PULL : collaborative tool for merging code branches, usually via GitHub
+PUT : Updating an existing resource
+DELETE : Deleting a specified resource
+
+
+concept of Cookies:
+server always send cookies, so express have ability to send cookies
+HTTP cookies are small block of data created by web server while a user is browsing a website and placed on the user's computer or other device by the user's web browser 
+
+use of cookies :
+1. session management : earlier we add product to cart but until we buy a product before that the data is not save on database , so website need to remember the thing which we add a product in cart and when we go to another page then also it need to remember both webpage product in the cart, so overall website remember some things is called session management.  
+2.tracking : which website we frequently visit, product or topics which you are intersted . 
+3.personalization
+4.authentication : once we login in facebook then in another pages we already login as we changes the pages, we dont need to login every page  
+cookies is a best way to remember that from this page what is last page that we visited
+
+eg: 
+inspect on page -> memory -> application -> in storage there is cookies -> click on downarrow there is website click on it ->  we can see different information save in the form of cookies 
+we can able to add cookie manually on the page which is appear after following respesctive path from inspect path 
+
+how to send cookies ?
+in express 
+app.get("/setcookies", (req, res) =>{
+     res.cookie("greet", "namaste");
+     res.cookie("origin" , "India");
+     res.send("we sent you a cookies!");
+});
+
+
+how cookie will parser
+we know how to pass cookie if we pass cooie from any route then if there is another page want access that cookie and parser(read) that cookie.
+cookies save in the request so if we print req.cookies then we able to access cookies but we this we need to use middleware which name is cookie-parser.
+npm install cookie-parser
+
+
+const cookieParser = require("cookie-parser");
+app.use(cookieParser()); //as request come it will pass through cookieparser then match with route whcih is before print of req.cookies statement 
+app.get("/", (req, res) => {
+    console.dir(req.cookies);//print cookies
+    res.send("Hii, I am root!"); 
+})
+now we able to read(parse) cookie on the terminal 
+to see the cookie on terminal just again click on localhost:3000 or refresh
+
+difference between console.log and console.dir
+console.log: General purpose logging of messages, variables, and expressions.
+console.dir: Detailed inspection of JavaScript object properties, including non-enumerable ones.
+
+signed cookies 
+npm install cookie-parser
+there is normal cookie which consist of (name, value) pair 
+sign cookie is type of cookie which consist of sign or stamp
+to save the cookies from tampering(changing value manully by other person) or unintensional changes, we send sign cookie then verify that is cookie is signed cookie
+signed cookie is way to check cookies send by the server that we recieve on another page is not get tampered 
+in signed cookies data pass in encoded format on the (inspect->...)page
+eg:
+const cookieParser = require("cookie-parser");
+app.use(cookieParser("secretcode")); //as request come it will pass through cookieparser then match with route whcih is before print of req.cookies statement if normal cooke then use app.use(cookieParser()); if signed cookie app.use(cookieParser("secretcode")); here "secretcode" act as authentication that it is signed cookie which is not get tampered
+//use of signed cookies
+ app.get("/getsignedcookie", (req, res)=> {
+     res.cookie("mage-in","maharashtra", {signed:true});
+     res.send("signed cookie send");
+ })
+
+ //verify signed cookies , we can able to verify that the cookie send with signed is same we get, so we access req.signedCookies
+ app.get("/verify", (req, res) =>{
+     console.log(req.signedCookies); //print only unsigned cookies
+     cookie will print on termial but if we tampered the cookie that is completely change the value manually in the (inspect->..) page then on terminal only '{}' will appear it mean value is tampered or if we change in the value from encoded part like "...maharashtra.." -> "...india.." then it will show {'made-in' : false} as certain part of encoded value is change 
+     res.send("verified"); 
+ });
+
+
+session 
+when client interact with the server this single interaction is called session.
+
+protocol
+the way by which our request or respose is passing and the rule followed by request and reponse is called protocol.
+
+type of protocol: 
+
+1. Stateful protocol
+Stateful protocol require server to save the status and session information.
+state mean request related information like in payment application state can be payment is scuucessfull or not is it refubd or completed , in case of e-commerce website state can be product in cart , product availability and quantity, delivary date of product .
+session information can be when request come and when the reponse is sended. 
+eg: ftp
+
+2.Stateless protocol
+It does not require the server to retain the server information , not consist any information related to status and session.
+eg: http
+
+Express session
+the work of express session is to make http request stateful whcih are in the in the expressvmean session related information save in server side. 
+eg: if user dont have account of amazon then also he added items in the cart, then express session assign session id to user and save information in this id like user's added items in the cart , this is save information in the server side.
+express session assing sessionId(it is unique id) to user.
+express session dont send whole information only send session id to the client side ,so user browser have sessionId that is this tiny information(sessionId) is save in form of cookies in the browser 
+all information not save in the cookie for client side as cookies have limit to save in formation , it have less limit to save information compare to the temporary storage use to save whole information.
+eg:
+//use of express session 
+app.use( 
+    session({
+        secret: "mysupersecretstring", 
+        resave:false , 
+        saveUninitialized:true ,
+    })
+);
+app.get("/test", (req ,res) =>{
+    res.send("test successfull"); 
+})
+//creating route to count same user in same session how many time request is sending.
+app.get("/reqcount", (req, res) =>{
+    if(req.session.count){//if req.session.count is already exist then increse that value , else initialize it
+        req.session.count++;
+     } else {
+        req.session.count = 1;
+     }
+    res.send(`you sent a request ${req.session.count} times`);
+});
+
+
+why we need to save information in the server side ?
+if user not register and add product of electornic in the cart and then user enter in the beauuty section & add some product , so if user switch the page from website old product added by the user we should not forget.
+but because http is stateless protocol we enter from one page to another page of same website or we dont use express session so server will forget that what are the product are added in the cart in last(earlier) page.
+so need to save information explicitly on server.
+this information not save in the database it can save in temporary storage, in the database only permanent information is saved.  
+
+note:session id of user,if we check sessionId in the google 2 different tab it will show same but if we go on different browser like safari 2 different tabs then it will show different id than google tab but in safari both tab have same is id like each other for same user.
+so browser wise it will detect that user are different but if we oopen tab in same browser then it will show same user in same session. 
+
+resave:false and saveUninitialized:true use to remove depricated warning
+resave:
+session related information saved in the temp. storage is known as memory or session store.resave force the session to be saved backed to the  session store,even if was not modified during request.   
+saveUninitialized: 
+the session which not start yet that also save in the store.
+
+use of express session: 
+npm i express-session
+const session = require("express-session");
+
+connect-flash
+npm i connect-flash
+message appear for few seconds by saving something like if we add new review then pop-up or can be aleart message appear that indicate new review added this msg appear for few secs so this message is known as flash-msg 
+after refreshing page msg should disappear
+The flash is a special area of the session used for storing messages. Messages are written to the flash and cleared after being displayed to the user. 
+
+for using flash there should be use of session.
+
+for pop-up design :
+to decrese size use col-6 
+to make it in center use offset-3
+
+Authentication 
+It is a process of verifying who someone is 
+
+Authorization 
+It is the process of verifying what specific application , files, and data a user has to access to
+after authentication it can be  on website which part user able to access
+eg: if we login on instagram and we post anything that post can be deleted by us only not our frined able to delete that post 
+
+password saving 
+passwirdd -> hash function (password to string)-> store the password
+when we try to login and enter password this password passes through hash function converted in to string then get compared with the save strign of password 
+
+hasing function 
+for every input there is fixed output 
+it is one way function that is from input we can take output but from output cannot take input mean passwroed -> hash form  but no  from hash form-> password
+for different input , there is a different putput but of same length 
+small chaneg in input should bring large chanegs in output
+eg: SHA256, MD5 , CRC , bcrypt 
+
+Salting 
+Paasword salting is a technique to protect password stored in databases by adding a string of 32 or mo re characters and then hashing them.
+
+for login authentication prcess we use website ' passportjs' 
+npm i passport 
+npm i passport-local
+npm i passport-local-mongoose
+
+Passport-Local Mongoose:
+Passport-Local Mongoose is a Mongoose plugin that simplifies building username and password login with Passport.
+
+configuaration(basic settings) strategy:
+passport.Limitialize(): a middleware that initializes passport 
+
+passport.session():
+a web application needs the ability to identify user as they browse from page to page. the series of requests and response , each associated with the same user , is known as a session .
+
+GET /signup : use to create signup form then request send to POST/signup then this will register new signup user 
+
+How to check is user is logged in or not for makign changes?
+req.Authenticated() is is passport method 
+this method of passport tell the user whihch is stored in session , when we seriliaze then new store the user information , passport will check the information of the user which we stored then that user is authenticated or is user logged in 
+listing have new route where we got form of creating new listing before rending this form we check user should logged in .
+
+For logout user ;
+we accpet get request at '/logout' the nuser will get logout for this functionality use passport methos named as 'req.logout' 
+this function use methos of serealize and deserealize and then delete user from current session  
+
+add style to login , sinup , logout 
+at any page only one button from 3 is visible at same page newver fins login and logout so add style 
+req.user is undefined-> not logged in -> show signup , login 
+req.user store any object then user is logged in  -> show logout   
+
+as user signup user should automaticlly login on basis of same detail.
+for this '/login' method is used , it is used in user.js file
+from npm use 'multer' for 'npm i multer' for upload image
+npm i dotenv
+npm install cloudinary
+npm install multer-storage-cloudinary
+
+use map ________ for map function  
+Geocoding : process of converting address (like street name , city name, state) into geographic coordinates (lattitude and longitude) which we can use to place marker on a map or position the map.
+type of geocoding :- 
+forward geocoding : text location to geographic coordinates 
+backword geocoding : geographic coordinates to text location  
