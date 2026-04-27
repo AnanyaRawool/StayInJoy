@@ -2,7 +2,6 @@ if(process.env.NODE_ENV != "production"){
     require("dotenv").config();
 }
 
-
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -84,6 +83,11 @@ app.use((req, res, next) =>{
     res.locals.currUser = req.user;
     next();
 })
+
+//root route added here
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
 
 //note: always take common path not go by name only common path from  that particularly review only section like here '/listings'
 app.use("/listings", listingRouter);//when there route call of /listings then use listing file 
