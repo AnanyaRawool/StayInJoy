@@ -171,5 +171,6 @@ module.exports.searchListings = async(req, res) => {
         return res.redirect("/listings");
     }
 
-    res.render("listings/index.ejs", { allListings });
+   // category: null 
+    res.render("listings/index.ejs", { allListings, category: null });
 };
