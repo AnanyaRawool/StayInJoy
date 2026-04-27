@@ -18,10 +18,10 @@
 **Authentication:** Passport.js   
 **Validation:** Joi
 
-## 🌐 Live Demo
+## Live Demo
 https://stayinjoy.onrender.com
 
-## 📸 Screenshots  
+## Screenshots  
 
 ### Home Page 
 <img width="1920" height="954" alt="Screenshot (469)" src="https://github.com/user-attachments/assets/8fc4470a-21c2-4f64-acbe-232f857f0e1f" />
